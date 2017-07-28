@@ -92,7 +92,7 @@ void UOscDispatcher::UnregisterReceiver(IOscReceiverInterface * receiver)
     _receivers.Remove(receiver);
 }
 
-static void SendMessage(TCircularQueue<std::tuple<FName, TArray<FOscDataElemStruct>, FIPv4Address>> & _pendingMessages,
+static void SendMessage(TCircularQueue<TTuple<FName, TArray<FOscDataElemStruct>, FIPv4Address>> & _pendingMessages,
                         const osc::ReceivedMessage & message,
                         const FIPv4Address & senderIp)
 {
@@ -159,7 +159,7 @@ static void SendMessage(TCircularQueue<std::tuple<FName, TArray<FOscDataElemStru
     }
 
     // save it in pending messages
-    const auto added = _pendingMessages.Enqueue(std::make_tuple(address, data, senderIp));
+    const auto added = _pendingMessages.Enqueue(MakeTuple(address, data, senderIp));
 
     // the circular buffer may be full.
     if(!added)
@@ -168,7 +168,7 @@ static void SendMessage(TCircularQueue<std::tuple<FName, TArray<FOscDataElemStru
     }
 }
 
-static void SendBundle(TCircularQueue<std::tuple<FName, TArray<FOscDataElemStruct>, FIPv4Address>> & _pendingMessages,
+static void SendBundle(TCircularQueue<TTuple<FName, TArray<FOscDataElemStruct>, FIPv4Address>> & _pendingMessages,
                        const osc::ReceivedBundle & bundle,
                        const FIPv4Address & senderIp)
 {
@@ -242,14 +242,14 @@ void UOscDispatcher::CallbackMainThread()
 
     FScopeLock ScopeLock(&_receiversMutex);
 
-    std::tuple<FName, TArray<FOscDataElemStruct>, FIPv4Address> message;
+    TTuple<FName, TArray<FOscDataElemStruct>, FIPv4Address> message;
     while(_pendingMessages.Dequeue(message))
     {
-        const FIPv4Address & senderIp = std::get<2>(message);
+        const FIPv4Address & senderIp = message.Get<2>();
         FString senderIpStr = FString::Printf(TEXT("%i.%i.%i.%i"), senderIp.A, senderIp.B, senderIp.C, senderIp.D);
         for(auto receiver : _receivers)
         {
-            receiver->SendEvent(std::get<0>(message), std::get<1>(message), senderIpStr);
+            receiver->SendEvent(message.Get<0>(), message.Get<1>(), senderIpStr);
         }
     }
 }

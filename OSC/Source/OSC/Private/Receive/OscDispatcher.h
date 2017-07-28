@@ -54,7 +54,7 @@ private:
     std::pair<FIPv4Address, uint32_t> _listening;
     FSocket * _socket;
     FUdpSocketReceiver * _socketReceiver;
-    TCircularQueue<std::tuple<FName, TArray<FOscDataElemStruct>, FIPv4Address>> _pendingMessages;
+    TCircularQueue<TTuple<FName, TArray<FOscDataElemStruct>, FIPv4Address>> _pendingMessages;
     int32 _taskSpawned;
 
     /// Protects _receivers
