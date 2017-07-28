@@ -4,7 +4,6 @@
 #include "Interfaces/IPv4/IPv4Address.h"
 #include "Containers/CircularQueue.h"
 #include "Common/UdpSocketReceiver.h"
-#include <utility>
 
 #include "OscDispatcher.generated.h"
 
@@ -51,7 +50,7 @@ private:
     
 private:
     TArray<IOscReceiverInterface *> _receivers;
-    std::pair<FIPv4Address, uint32_t> _listening;
+    TPair<FIPv4Address, uint32_t> _listening;
     FSocket * _socket;
     FUdpSocketReceiver * _socketReceiver;
     TCircularQueue<TTuple<FName, TArray<FOscDataElemStruct>, FIPv4Address>> _pendingMessages;

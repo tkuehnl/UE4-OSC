@@ -1,4 +1,7 @@
 #include "OscPrivatePCH.h"
+
+#include "ISettingsModule.h"
+#include "ISettingsSection.h"
 #include "OscSettings.h"
 #include "OscDispatcher.h"
 

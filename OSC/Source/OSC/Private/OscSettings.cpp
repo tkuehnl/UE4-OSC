@@ -1,4 +1,6 @@
 #include "OscSettings.h"
+#include "Runtime/Core/Public/Misc/Base64.h"
+#include "Common/UdpSocketBuilder.h"
 #include "OscDispatcher.h"
 
 #include "OscPrivatePCH.h"

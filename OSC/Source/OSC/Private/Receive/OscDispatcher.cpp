@@ -28,7 +28,7 @@ UOscDispatcher * UOscDispatcher::Get()
 
 void UOscDispatcher::Listen(FIPv4Address address, uint32_t port, bool multicastLoopback)
 {
-    if(_listening != std::make_pair(address, port))
+    if(_listening != TPair<FIPv4Address, uint32_t>(address, port))
     {
         Stop();
 
@@ -54,7 +54,7 @@ void UOscDispatcher::Listen(FIPv4Address address, uint32_t port, bool multicastL
             _socketReceiver->OnDataReceived().BindUObject(this, &UOscDispatcher::Callback);
             _socketReceiver->Start();
 
-            _listening = std::make_pair(address, port);
+            _listening = TPair<FIPv4Address, uint32_t>(address, port);
             UE_LOG(LogOSC, Display, TEXT("Listen to port %d"), port);
         }
         else
@@ -77,7 +77,7 @@ void UOscDispatcher::Stop()
         _socket = nullptr;
     }
 
-    _listening = std::make_pair(FIPv4Address(0), 0);
+    _listening = TPair<FIPv4Address, uint32_t>(FIPv4Address(0), 0);
 }
 
 void UOscDispatcher::RegisterReceiver(IOscReceiverInterface * receiver)
