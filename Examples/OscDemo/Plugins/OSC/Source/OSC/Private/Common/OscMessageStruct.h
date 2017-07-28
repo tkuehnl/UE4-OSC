@@ -9,9 +9,9 @@ struct FOscMessageStruct
 {
     GENERATED_USTRUCT_BODY()
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=OSC)
     FName Address;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=OSC)
     TArray<FOscDataElemStruct> Data;
 };

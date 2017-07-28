@@ -1,6 +1,10 @@
 #pragma once
 
 #include "OscDataElemStruct.h"
+#include "Interfaces/IPv4/IPv4Address.h"
+#include "Containers/CircularQueue.h"
+#include "Common/UdpSocketReceiver.h"
+
 #include "OscDispatcher.generated.h"
 
 struct IOscReceiverInterface;
@@ -16,7 +20,7 @@ class UOscDispatcher : public UObject
 
     friend class FOscModule;
 
-    void Listen(FIPv4Address address, uint32_t port);
+    void Listen(FIPv4Address address, uint32_t port, bool multicastLoopback);
     void Stop();
 
 public:
@@ -46,10 +50,10 @@ private:
     
 private:
     TArray<IOscReceiverInterface *> _receivers;
-    std::pair<FIPv4Address, uint32_t> _listening;
+    TPair<FIPv4Address, uint32_t> _listening;
     FSocket * _socket;
     FUdpSocketReceiver * _socketReceiver;
-    TCircularQueue<std::tuple<FName, TArray<FOscDataElemStruct>, FIPv4Address>> _pendingMessages;
+    TCircularQueue<TTuple<FName, TArray<FOscDataElemStruct>, FIPv4Address>> _pendingMessages;
     int32 _taskSpawned;
 
     /// Protects _receivers

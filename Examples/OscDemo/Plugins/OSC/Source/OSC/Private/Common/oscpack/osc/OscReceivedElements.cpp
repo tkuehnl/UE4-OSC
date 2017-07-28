@@ -35,11 +35,11 @@
     above license is reproduced.
 */
 
-#include "OscPrivatePCH.h"
-
 #include "OscReceivedElements.h"
 
 #include "OscHostEndianness.h"
+
+#include "OscPrivatePCH.h"
 
 #include <cstddef> // ptrdiff_t
 
@@ -83,13 +83,6 @@ static inline const char* FindStr4End( const char *p, const char *end )
         return 0;
     else
         return p + 1;
-}
-
-
-// round up to the next highest multiple of 4. unless x is already a multiple of 4
-static inline uint32 RoundUp4( uint32 x ) 
-{
-    return (x + 3) & ~((uint32)0x03);
 }
 
 

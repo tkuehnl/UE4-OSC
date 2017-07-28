@@ -2,8 +2,8 @@ namespace UnrealBuildTool.Rules
 {
 	public class OSC : ModuleRules
 	{
-		public OSC(TargetInfo Target)
-		{
+		public OSC(ReadOnlyTargetRules Target) : base(Target)
+        {
 			PublicDependencyModuleNames.AddRange(
 				new string[]
 				{
@@ -20,6 +20,7 @@ namespace UnrealBuildTool.Rules
                     "InputCore",
                     "Slate",
                     "SlateCore",
+					"Networking",
 				}
 			);
 
@@ -38,7 +39,7 @@ namespace UnrealBuildTool.Rules
 				}
 			);
 
-            if (Target.Type.HasValue && TargetRules.IsEditorType(Target.Type.Value))
+            if (Target.Type == TargetRules.TargetType.Editor)
             {
                 Definitions.Add("OSC_EDITOR_BUILD=1");
 

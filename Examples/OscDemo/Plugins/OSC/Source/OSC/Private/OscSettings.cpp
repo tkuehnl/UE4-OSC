@@ -1,11 +1,13 @@
-#include "OscPrivatePCH.h"
-
 #include "OscSettings.h"
+#include "Runtime/Core/Public/Misc/Base64.h"
+#include "Common/UdpSocketBuilder.h"
 #include "OscDispatcher.h"
 
+#include "OscPrivatePCH.h"
 
 UOscSettings::UOscSettings()
  :  ReceiveFrom("8000"),
+    MulticastLoopback(true),
     _sendSocket(FUdpSocketBuilder(TEXT("OscSender")).Build())
 {
     SendTargets.Add(TEXT("127.0.0.1:8000"));
@@ -160,7 +162,7 @@ void UOscSettings::ClearKeyInputs(UOscDispatcher & dispatcher)
     {
         // Unregister here, not in the OscReceiverInputKey destructor
         // because it would crash at the application exit.
-        dispatcher.UnregisterReceiver(&receiver);
+        dispatcher.UnregisterReceiver(receiver.get());
     }
     _keyReceivers.Reset(0);
 }
@@ -170,7 +172,8 @@ void UOscSettings::UpdateKeyInputs(UOscDispatcher & dispatcher)
     ClearKeyInputs(dispatcher);
     for(const auto & address : Inputs)
     {
-        _keyReceivers.Emplace(address);
-        dispatcher.RegisterReceiver(&_keyReceivers.Last());
+        auto receiver = std::make_unique<OscReceiverInputKey>(address);
+        dispatcher.RegisterReceiver(receiver.get());
+        _keyReceivers.Add(std::move(receiver));
     }
 }

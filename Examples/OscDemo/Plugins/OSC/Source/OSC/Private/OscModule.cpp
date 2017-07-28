@@ -1,4 +1,7 @@
 #include "OscPrivatePCH.h"
+
+#include "ISettingsModule.h"
+#include "ISettingsSection.h"
 #include "OscSettings.h"
 #include "OscDispatcher.h"
 
@@ -15,7 +18,7 @@ class FOscModule : public IModuleInterface
 public:
     virtual void StartupModule( ) override
     {
-        if(!FModuleManager::Get().LoadModule(TEXT("Networking")).IsValid())
+        if(!FModuleManager::Get().IsModuleLoaded(TEXT("Networking")))
         {
             UE_LOG(LogOSC, Error, TEXT("Required module Networking failed to load"));
             return;
@@ -105,7 +108,7 @@ public:
         uint32_t receivePort;
         if(UOscSettings::Parse(settings->ReceiveFrom, &receiveAddress, &receivePort))
         {
-            _dispatcher->Listen(receiveAddress, receivePort);
+            _dispatcher->Listen(receiveAddress, receivePort, settings->MulticastLoopback);
         }
         else
         {
