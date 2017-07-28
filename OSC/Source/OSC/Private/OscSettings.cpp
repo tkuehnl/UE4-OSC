@@ -1,8 +1,7 @@
-#include "OscPrivatePCH.h"
-
 #include "OscSettings.h"
 #include "OscDispatcher.h"
 
+#include "OscPrivatePCH.h"
 
 UOscSettings::UOscSettings()
  :  ReceiveFrom("8000"),

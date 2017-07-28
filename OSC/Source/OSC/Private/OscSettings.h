@@ -1,7 +1,10 @@
 #pragma once
 
-#include <utility>
+
 #include "OscReceiverInputKey.h"
+#include "Interfaces/IPv4/IPv4Address.h"
+#include <memory>
+#include <utility>
 
 #include "OscSettings.generated.h"
 

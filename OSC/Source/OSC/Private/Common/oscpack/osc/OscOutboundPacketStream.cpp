@@ -35,8 +35,6 @@
     above license is reproduced.
 */
 
-#include "OscPrivatePCH.h"
-
 #include "OscOutboundPacketStream.h"
 
 #if defined(__WIN32__) || defined(WIN32) || defined(_WIN32)
@@ -51,6 +49,8 @@
 #include <cstddef> // ptrdiff_t
 
 #include "OscHostEndianness.h"
+
+#include "OscPrivatePCH.h"
 
 #if defined(__BORLANDC__) // workaround for BCB4 release build intrinsics bug
 namespace std {

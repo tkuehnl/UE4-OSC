@@ -35,9 +35,9 @@
     above license is reproduced.
 */
 
-#include "OscPrivatePCH.h"
-
 #include "OscTypes.h"
+
+#include "OscPrivatePCH.h"
 
 namespace osc{
 

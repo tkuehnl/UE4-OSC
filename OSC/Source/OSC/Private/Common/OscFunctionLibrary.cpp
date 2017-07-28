@@ -1,7 +1,8 @@
-#include "OscPrivatePCH.h"
-#include "OscSettings.h"
 #include "OscFunctionLibrary.h"
+#include "OscSettings.h"
 #include "oscpack/osc/OscOutboundPacketStream.h"
+
+#include "OscPrivatePCH.h"
 
 
 template <class T>

@@ -1,6 +1,11 @@
 #pragma once
 
 #include "OscDataElemStruct.h"
+#include "Interfaces/IPv4/IPv4Address.h"
+#include "Containers/CircularQueue.h"
+#include "Common/UdpSocketReceiver.h"
+#include <utility>
+
 #include "OscDispatcher.generated.h"
 
 struct IOscReceiverInterface;
